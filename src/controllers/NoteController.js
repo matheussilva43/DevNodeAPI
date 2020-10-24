@@ -53,8 +53,28 @@ module.exports = {
 
         res.json(json);
     },
-    edit: () => {
-        
+    edit: async (req, res) => {
+        let json = {error: '', result:{}};
+
+        let id = req.body.title;
+        let title = req.body.title;
+        let body = req.body.body;
+
+        if(title && body) {
+
+            await NoteService.update(id, title, body);
+
+            json.result = {
+                id,
+                title,
+                body
+            };
+            
+        } else {
+            json.error = "Campos não enviados";
+        }
+
+        res.json(json);
     },
     delete: () => {
         
